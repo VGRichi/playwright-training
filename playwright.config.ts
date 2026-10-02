@@ -29,14 +29,6 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: "on-first-retry",
-
-    baseURL: process.env.baseURL,
-
-    httpCredentials: {
-      username: process.env.HTTP_USERNAME!,
-      password: process.env.HTTP_PASSWORD!,
-    },
-    //FOR ESAT
   },
 
   /* Configure projects for major browsers */

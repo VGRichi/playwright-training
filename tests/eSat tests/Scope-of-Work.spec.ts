@@ -1,14 +1,32 @@
 import { expect, test } from "@playwright/test";
 import path from "path";
 
-test.beforeEach(async ({ page }) => {
+test.use({
+  baseURL: process.env.baseURL,
+  httpCredentials: {
+    username: process.env.HTTP_USERNAME!,
+    password: process.env.HTTP_PASSWORD!,
+  },
+})
+
+
+//LOGIN
+test.beforeEach("ESAT login",async ({ page }) => {
   await page.goto("/");
   await page.locator('.card').filter({ hasText: 'Javid' }).getByRole('button', { name: 'Use this' }).click();
   await page.locator('.card-body').getByText('"SƏNAYE TƏCHİZAT SERVİS" MƏHDUD MƏSULİYYƏTLİ CƏMİYYƏTİ').click()
   await page.locator('.card-header').getByText('Administrator', { exact: true }).click()
 });
 
-test("ESAT Login", async ({ page }) => {
+
+//TESTS
+test("Scope of Work Creation", async ({ page }) => {
+  await page.goto("/scope-of-works/list");
+  await page.getByRole("button", { name: "Yarat" }).click();
+
+});
+
+test("Create Scope of Work", async ({ page }) => {
   await page.goto("/scope-of-works/list");
   await page.getByRole("button", { name: "Yarat" }).click();
 
