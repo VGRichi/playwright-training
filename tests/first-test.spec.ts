@@ -54,8 +54,8 @@ test('Locator syntax rules', async ({ page }) => {
 
 //USER VISIBLE LOCATORS
 test('User visible locators', async ({ page }) => {
-    await page.getByRole('button', {name: 'Sign in'}).first().click()
-    await page.getByRole('textbox', {name: "Email"}).first().fill('test@example.com')
+    await page.getByRole('button', { name: 'Sign in' }).first().click()
+    await page.getByRole('textbox', { name: "Email" }).first().fill('test@example.com')
 
     await page.getByLabel('Email').first().fill('test@example2.com')
 
@@ -72,19 +72,28 @@ test('Locating child elements', async ({ page }) => {
     await page.locator('nb-card').locator('nb-radio-group').locator(':text-is("Option 1")').click()
     await page.locator('nb-card nb-radio-group :text-is("Option 2")').click()
 
-    await page.locator('nb-card').getByRole('button', {name: 'Sign in'}).first().click()
+    await page.locator('nb-card').getByRole('button', { name: 'Sign in' }).first().click()
 
     await page.locator('nb-card').nth(3).getByRole('button').click()
 })
 
 test('Locating parent elements', async ({ page }) => {
-    await page.locator('nb-card', {hasText: 'Using the Grid'}).getByRole('button').click()
-    await page.locator('nb-card', {has: page.locator('#inputEmail1')}).getByRole('button').click()
+    await page.locator('nb-card', { hasText: 'Using the Grid' }).getByRole('button').click()
+    await page.locator('nb-card', { has: page.locator('#inputEmail1') }).getByRole('button').click()
 
-    await page.locator('nb-card').filter({hasText: 'Using the Grid'}).getByRole('button').click()
+    await page.locator('nb-card').filter({ hasText: 'Using the Grid' }).getByRole('button').click()
 
-    await page.locator('nb-card').filter({has: page.locator('nb-checkbox')}).filter({hasText:'Submit'})
+    await page.locator('nb-card').filter({ has: page.locator('nb-checkbox') }).filter({ hasText: 'Submit' })
         .getByLabel('Email').fill('test@example5.com')
 
     await page.getByText('Using the Grid').locator('..').getByRole('button').click()
+})
+
+
+test('Reusing locators', async ({ page }) => {
+    await page.locator('nb-card', { hasText: 'Basic form' }).getByLabel('Email').fill('test@example5.com')
+    await page.locator('nb-card', { hasText: 'Basic form' }).getByLabel('Password').fill('1245')
+    await page.locator('nb-card', {hasText: 'Basic form'}).locator('checkbox').click()
+    await page.locator('nb-card', {hasText: 'Basic form'}).getByRole('button').click()
+
 })
