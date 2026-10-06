@@ -7,15 +7,23 @@ export class SowSteps {
     return this.page.getByRole('tabpanel', { name });
   }
 
-  async saveRowAndStep(stepName: string) {
-    await test.step(`Save "${stepName}"`, async () => {
-      const step = this.step(stepName);
+  async waitForLoader() {
+    await expect(this.page.locator('.global-loader-overlay')).toBeHidden({ timeout: 30000 });
+  }
 
-      const rowSave = step.getByTitle('Yadda saxla');
-      await rowSave.click();
-      await expect(rowSave).toBeHidden();
+  async fillBomRow(data: { name: string; description: string; quantity: string }) {
+  const row = this.page.locator('app-bom-step tbody tr').last();
+  const cell = (i: number) => row.locator('td').nth(i);
 
-      await step.locator('button:not([title])', { hasText: 'Yadda saxla' }).click();
+  await cell(1).locator('input').fill(data.name);
+  await cell(2).locator('input').fill(data.description);
+  await cell(3).locator('input').fill(data.quantity);
+}
+
+  async saveStep(stepName: string) {
+    await test.step(`Save step "${stepName}"`, async () => {
+      await this.waitForLoader();
+      await this.step(stepName).locator('button:not([title])', { hasText: 'Yadda saxla' }).click();
     });
   }
 }
