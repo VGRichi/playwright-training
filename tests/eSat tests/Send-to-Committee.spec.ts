@@ -1,0 +1,115 @@
+import { expect, test, Page } from "@playwright/test";
+import path from "path";
+import { esatLogin } from "../../pages/eSatLogin";
+import { esatCredentials } from "../../pages/eSatLogin";
+import { SowCreateModal } from "../../pages/SowCreateModal";
+import { SowSteps } from "../../pages/SowSteps";
+
+
+//LOGIN
+test.use(esatCredentials);
+
+test.beforeEach(async ({ page }) => {
+  await esatLogin(page);
+});
+
+//TESTS
+test("Scope of Work Creation", async ({ page }) => {
+    test.setTimeout(50000)
+    await page.goto("/scope-of-works/list");
+    await page.getByRole('button', { name: 'Yarat' }).click();
+    await page.getByRole('textbox', { name: 'Satınalma predmeti' }).fill('test pw rfq');
+    await page.getByRole('combobox', { name: 'Satınalma metodu Satınalma' }).click();
+    await page.getByRole('option', { name: 'Kotirovka sorğusu', exact: true }).click();
+    await page.getByRole('dialog', { name: 'Şərtlər toplusunun yaradılması' }).click();
+    await page.getByRole('option', { name: 'Mal' }).click();
+    await page.getByRole('textbox', { name: 'Ehtimal olunan qiymət' }).click();
+    await page.getByRole('textbox', { name: 'Ehtimal olunan qiymət' }).fill('500');
+    await page.getByRole('dialog', { name: 'Şərtlər toplusunun yaradılması' }).click();
+    await page.locator('input[type="file"]').setInputFiles('playwright-test.pdf');
+    await page.getByRole('button', { name: 'Yarat' }).click();
+    await page.getByRole('combobox', { name: 'Elan sətri Satınalma planı' }).click();
+    await page.locator('#mat-option-18').click();
+    await page.getByText('Qoşma').click();
+    await page.locator('input[type="file"]').setInputFiles('playwright-test.pdf');
+    await page.getByRole('button', { name: 'Yadda saxla' }).click();
+    await page.locator('mat-form-field').filter({ hasText: 'Təkliflərin cəlb edilməsi bar' }).getByLabel('Open calendar').click();
+    await page.getByRole('gridcell', { name: 'Okt' }).nth(5).click();
+    await page.getByRole('button').filter({ hasText: 'done' }).click();
+    await page.locator('mat-form-field').filter({ hasText: 'Təkliflərin təqdim edilmə' }).getByLabel('Open calendar').click();
+    await page.getByRole('button', { name: 'Next month' }).click();
+    await page.getByRole('button', { name: 'Next month' }).click();
+    await page.locator('td').filter({ hasText: '10' }).click();
+    await page.locator('.cdk-overlay-backdrop').click();
+    await page.getByRole('button', { name: 'Yadda saxla' }).click();
+    await page.locator('mat-form-field').filter({ hasText: 'Təkliflərin təqdim edilmə' }).getByLabel('Open calendar').click();
+    await page.getByRole('button', { name: 'Next month' }).click();
+    await page.getByRole('button', { name: 'Next month' }).click();
+    await page.locator('td').filter({ hasText: '17' }).click();
+    await page.getByRole('button').filter({ hasText: 'done' }).click();
+    await page.getByRole('button', { name: 'Yadda saxla' }).click();
+    await page.getByText('Seçim edin Satınalmaya dair s').click();
+    await page.getByRole('option', { name: 'Bəli' }).click();
+    await page.getByRole('textbox', { name: 'Satınalmaya dair sənədlərin t' }).click();
+    await page.getByRole('textbox', { name: 'Satınalmaya dair sənədlərin t' }).fill('test');
+    await page.getByRole('textbox', { name: 'Satınalmaya dair sənədlərin t' }).press('ControlOrMeta+a');
+    await page.getByRole('textbox', { name: 'Satınalmaya dair sənədlərin t' }).press('ControlOrMeta+c');
+    await page.getByRole('textbox', { name: 'Satınalmaya dair sənədlərin t' }).fill('test');
+    await page.getByRole('combobox', { name: 'Dövlət mənsubiyyətinə görə mə' }).click();
+    await page.getByRole('option', { name: 'Bəli' }).click();
+    await page.getByRole('textbox', { name: 'İştirakı məhdudlaşdırılan ölk' }).click();
+    await page.getByRole('textbox', { name: 'İştirakı məhdudlaşdırılan ölk' }).fill('test');
+    await page.getByRole('combobox', { name: 'Subpodratçının cəlb edilməsin' }).click();
+    await page.getByRole('listbox', { name: 'Subpodratçının cəlb edilməsin' }).getByText('Bəli').click();
+    await page.getByRole('textbox', { name: 'Subpodratçı üçün tələblər' }).click();
+    await page.getByRole('textbox', { name: 'Subpodratçı üçün tələblər' }).fill('test');
+    await page.getByRole('combobox', { name: 'Birgə fəaliyyət üzvlərinin' }).click();
+    await page.getByRole('option', { name: '2' }).click();
+    await page.getByRole('combobox', { name: 'Yetərsay və maliyyələşdirmə ə' }).click();
+    await page.getByRole('option', { name: 'Bəli' }).click();
+    await page.getByRole('textbox', { name: 'Uyğunluq sənədlərinin yenidən' }).click();
+    await page.getByRole('textbox', { name: 'Uyğunluq sənədlərinin yenidən' }).fill('test');
+    await page.getByRole('textbox', { name: 'Alternativ texniki həllərin' }).click();
+    await page.getByRole('textbox', { name: 'Alternativ texniki həllərin' }).fill('test');
+    await page.getByRole('button', { name: 'Yadda saxla' }).click();
+    await page.getByRole('textbox', { name: 'Uyğunluğa dair qeydlər' }).click();
+    await page.getByRole('textbox', { name: 'Uyğunluğa dair qeydlər' }).fill('test');
+    await page.getByRole('button', { name: 'Yadda saxla' }).click();
+    await page.getByRole('textbox', { name: 'Müqavilənin icra müddəti (bu' }).click();
+    await page.getByRole('textbox', { name: 'Müqavilənin icra müddəti (bu' }).fill('35');
+    await page.getByText('Seçim edin İstehsalçı icazəsi').click();
+    await page.getByRole('option', { name: 'Bəli' }).click();
+    await page.getByRole('textbox', { name: 'İstehsalçının icazəsi tələb' }).click();
+    await page.getByRole('textbox', { name: 'İstehsalçının icazəsi tələb' }).fill('test');
+    await page.getByRole('combobox', { name: 'Satış sonrası xidmət Seçim' }).click();
+    await page.getByRole('listbox', { name: 'Satış sonrası xidmət' }).getByText('Bəli').click();
+    await page.getByRole('textbox', { name: 'İstismar müddəti (ehtiyat' }).click();
+    await page.getByRole('textbox', { name: 'İstismar müddəti (ehtiyat' }).fill('test');
+    await page.getByRole('textbox', { name: 'Digər tələblər' }).click();
+    await page.getByRole('textbox', { name: 'Digər tələblər' }).fill('test');
+    await page.getByRole('tabpanel', { name: '6 Satınalma predmetinə dair t' }).getByText('Qoşma').click();
+    await page.getByRole('tabpanel', { name: '6 Satınalma predmetinə dair t' }).locator('input[type="file"]').setInputFiles('Buyer File.pdf');
+    await page.getByRole('button', { name: 'Yadda saxla' }).click();
+    await page.getByRole('spinbutton', { name: 'Təklifin qüvvədə olma müddəti' }).click();
+    await page.getByRole('spinbutton', { name: 'Təklifin qüvvədə olma müddəti' }).fill('35');
+    await page.getByRole('textbox', { name: 'Təklifin qiymətində nəzərə al' }).click();
+    await page.getByRole('textbox', { name: 'Təklifin qiymətində nəzərə al' }).fill('test');
+    await page.getByRole('button', { name: 'Yadda saxla' }).click();
+    await page.locator('#mat-input-53').click();
+    await page.locator('#mat-input-53').fill('mal 1');
+    await page.locator('#mat-input-53').press('Tab');
+    await page.locator('#mat-input-54').fill('order 1');
+    await page.locator('#mat-input-54').press('Tab');
+    await page.locator('#mat-input-55').fill('1');
+    await page.locator('#mat-input-55').press('Tab');
+    await page.getByRole('cell', { name: 'Seçin' }).getByRole('combobox').press('Enter');
+    await page.getByRole('cell', { name: 'Seçin' }).getByRole('combobox').selectOption('kg');
+    await page.getByRole('button', { name: 'Axtar' }).click();
+    await page.getByRole('button', { name: 'Toggle Canlı Bitki və Heyvan' }).click();
+    await page.getByRole('button', { name: 'Toggle Canlı heyvanlar' }).click();
+    await page.getByRole('button', { name: 'Toggle Ev heyvanları', exact: true }).click();
+    await page.locator('#mat-dialog-2').click();
+    await page.getByRole('radio', { name: 'Pişiklər' }).check();
+    await page.getByRole('button', { name: 'Təsdiq edin' }).click();
+
+});
