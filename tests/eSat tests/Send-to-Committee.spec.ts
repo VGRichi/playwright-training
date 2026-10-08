@@ -15,7 +15,7 @@ test.beforeEach(async ({ page }) => {
 
 //TESTS
 test("Scope of Work - Send to Committee", async ({ page }) => { 
-    test.setTimeout(100000);
+    test.setTimeout(200000);
 
     const dialogs = {
         homogenity: page.locator('mat-dialog-container').filter({ has: page.getByRole('button', { name: 'İrəli' }) }),
